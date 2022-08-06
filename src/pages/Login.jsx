@@ -1,3 +1,4 @@
+import React from "react"
 import {
     Flex,
     Box,
@@ -13,6 +14,7 @@ import {
     useColorModeValue,
   } from '@chakra-ui/react';
 import { useState } from 'react';
+import {useNavigate} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { handleLoginFetch } from '../redux/authReducer/actions';
   const loginData={
@@ -23,9 +25,15 @@ import { handleLoginFetch } from '../redux/authReducer/actions';
 
     const [userDetails, setUserDetails]=useState(loginData)
     const {email, password}=userDetails
-    // const dispatch=useDispatch()
-    // const {token}=useSelector(state=>state.Auth)
+    const dispatch=useDispatch()
+    const {token}=useSelector(state=>state.Auth)
+    const navigate=useNavigate()
 
+    React.useEffect(()=>{
+      if(!!token){
+        navigate("/")
+      }
+    },[token])
 
     const handleOnChange=(e)=>{
         const {name, value}=e.target
@@ -34,8 +42,8 @@ import { handleLoginFetch } from '../redux/authReducer/actions';
     }
 
     const handleOnclick=()=>{
-        // dispatch(handleLoginFetch(userDetails))
-        console.log(userDetails)
+        dispatch(handleLoginFetch(userDetails))
+        setUserDetails(loginData)
         
 
     }

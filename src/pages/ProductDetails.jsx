@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 import {Link} from "react-router-dom"
+import {useSelector} from "react-redux"
+import{useNavigate } from "react-router-dom"
 export const ProductDetails = () => {
+    const {token}=useSelector(state=>state.Auth)
+const navigate=useNavigate()
+
+React.useEffect(()=>{
+  if(!token){
+    navigate("/login")
+  }
+},[token])
     const {id}=useParams()
     const [product, setProduct]=useState({})
 
