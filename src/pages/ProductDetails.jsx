@@ -6,6 +6,7 @@ import{useNavigate } from "react-router-dom"
 export const ProductDetails = () => {
     const {token}=useSelector(state=>state.Auth)
 const navigate=useNavigate()
+const [count, setCount]=useState(0)
 
 React.useEffect(()=>{
   if(!token){
@@ -38,7 +39,13 @@ React.useEffect(()=>{
             <div style={{display:"flex", justifyContent:"space-around"}}>
             <h5>₹ {product.price} /-</h5>
                 <Link to="/">Back</Link>
-            </div >                
+            </div >    
+            <div>
+                {
+                    !!count? (<><button>-</button>{count}<button>+</button><button onClick={()=>{setCount(()=>0)}}>Remove</button></>):(<button onClick={()=>{setCount(prev=>prev+1)}}>Add to Cart</button>)
+                }
+                
+            </div>            
         </div>        
     </div>
   )
